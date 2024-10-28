@@ -1,3 +1,3 @@
-# Quiz
+# NakaNino
 
-This application is a simple quiz game where users answer a series of questions and receive feedback on their performance. The game keeps track of the user's score and provides relevant feedback based on their answers. Code writed on JavaScript.
+A small site where you can scroll through the images in a carousel and click on the image to see a modal window. You can also download a bonus image.
