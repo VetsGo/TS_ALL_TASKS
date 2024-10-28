@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule</title>
+    <style>
+        table {
+            width: 70%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+            width: 20%;
+            height: 80px;
+            word-wrap: break-word;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .lesson-container {
+            margin-bottom: 10px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Schedule of classes at the university</h1>
+
+    <button id="createCourseBtn">Create Course</button>
+    <button id="createProfessorBtn">Create Professor</button>
+    <button id="createLessonBtn">Create Lesson</button>
+
+    <!-- Модальне вікно для створення курсу -->
+    <div id="courseModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; border:1px solid #ccc; padding:20px; z-index:1000;">
+        <h2>Create Course</h2>
+        <label for="courseName">Course name:</label>
+        <input type="text" id="courseName" required>
+    
+        <label for="courseType">Course type:</label>
+        <select id="courseType">
+            <option value="Lecture">Lecture</option>
+            <option value="Seminar">Seminar</option>
+            <option value="Lab">Lab</option>
+            <option value="Practice">Practice</option>
+        </select>
+
+        <button id="submitCourseBtn">Add</button>
+        <button id="closeModalBtn">Close</button>
+    </div>
+
+    <!-- Модальне вікно для створення викладача -->
+    <div id="professorModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; border:1px solid #ccc; padding:20px; z-index:1000;">
+        <h2>Create Professor</h2>
+        <label for="professorName">Professor name:</label>
+        <input type="text" id="professorName" required>
+
+        <label for="departmentName">Department name:</label>
+        <input type="text" id="departmentName" required>
+
+        <button id="submitProfessorBtn">Add</button>
+        <button id="closeProfessorModalBtn">Close</button>
+    </div>
+
+    <!-- Модальне вікно для створення уроку -->
+    <div id="lessonModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; border:1px solid #ccc; padding:20px; z-index:1000;">
+        <div id="modalBackground"></div>
+        <div class="modalContent">
+            <h2>Create Lesson</h2>
+            <label for="courseSelect">Course:</label>
+            <select id="courseSelect"></select>
+
+            <label for="professorSelect">Professor:</label>
+            <select id="professorSelect"></select>
+
+            <label for="classroomSelect">Classroom:</label>
+            <select id="classroomSelect"></select>
+
+            <label for="daySelect">DayOfWeek:</label>
+            <select id="daySelect">
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+            </select>
+
+            <label for="timeSelect">TimeSlot:</label>
+            <select id="timeSelect">
+                <option value="8:30-10:00">8:30-10:00</option>
+                <option value="10:15-11:45">10:15-11:45</option>
+                <option value="12:15-13:45">12:15-13:45</option>
+                <option value="14:00-15:30">14:00-15:30</option>
+                <option value="15:45-17:15">15:45-17:15</option>
+            </select>
+
+            <button id="submitLessonBtn">Add</button>
+            <button id="closeLessonModalBtn">Close</button>
+        </div>
+    </div>
+
+    <!-- Модальне вікно для зміни кабінету -->
+    <div id="changeClassroomModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:white; border:1px solid #ccc; padding:20px; z-index:1000;">
+        <h2>Reassign classroom</h2>
+        <label for="newClassroomSelect">New classroom:</label>
+        <select id="newClassroomSelect"></select>
+
+        <button id="confirmChangeBtn">Confirm</button>
+        <button id="closeChangeModalBtn">Close</button>
+    </div>
+
+    <div id="modalBackground" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:999;"></div>
+
+    <!-- Таблиця розкладу -->
+    <table id="scheduleTable">
+        <thead>
+            <tr>
+                <th>Schedule</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+            </tr>
+        </thead>
+        <tbody id="scheduleBody">
+        </tbody>
+    </table>
+
+    <!-- Вивід вільних аудиторій -->
+    <div>
+        <h2>Available classrooms</h2>
+        <label for="availableDaySelect">DayOfWeek:</label>
+        <select id="availableDaySelect">
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+        </select>
+
+        <label for="availableTimeSelect">TimeSlot:</label>
+        <select id="availableTimeSelect">
+            <option value="8:30-10:00">8:30-10:00</option>
+            <option value="10:15-11:45">10:15-11:45</option>
+            <option value="12:15-13:45">12:15-13:45</option>
+            <option value="14:00-15:30">14:00-15:30</option>
+            <option value="15:45-17:15">15:45-17:15</option>
+        </select>
+
+        <button id="findClassroomsBtn">Show</button>
+        <div id="availableClassrooms"></div>
+    </div>
+
+    <!-- Вивід завантаженості аудиторій -->
+    <h2>Classroom utilization</h2>
+    <button id="showUtilizationBtn">Show</button>
+    <div id="classroomUtilization"></div>
+
+    <!-- Вивід популярного предмету -->
+    <h2>Most popular course type</h2>
+    <button id="mostPopularCourseTypeBtn">Show</button>
+    <div id="mostPopularCourseType"></div>
+
+    <!-- Вивід розкладу викладача -->
+    <h2>Professors schedule</h2>
+   <label for="professorSelect">Select professor:</label>
+    <select id="professorScheduleSelect">
+    </select>
+    <button id="showProfessorScheduleBtn">Show</button>
+
+    <div id="professorSchedule"></div>
+
+    <script src="index.js"></script>
+</body>
+</html>
