@@ -1,3 +1,3 @@
-# All Tasks
+# Simple Online Store
 
-This repository contains all typescript tasks. Each task has its own branch, which you can select to view specific work.
+Developed the basic components of the online store using Generic types. You can add a product to the cart and also see the price of the products in the cart.
