@@ -1,3 +1,3 @@
-# All Tasks
+# Content Management System
 
-This repository contains all typescript tasks. Each task has its own branch, which you can select to view specific work.
+Used a type-safe architecture for the content management system. Added articles and products. Added permissions, validation, and versioning. The code was neatly sorted into folders, and the main file checks the operation of the code functions.
