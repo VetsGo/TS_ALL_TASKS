@@ -1,3 +1,3 @@
-# All Tasks
+# Learning management systems
 
-This repository contains all typescript tasks. Each task has its own branch, which you can select to view specific work.
+In this program, enum and interfaces were used. After that, the main methods were implemented and checks were added to them. The program can display the necessary information about students.
